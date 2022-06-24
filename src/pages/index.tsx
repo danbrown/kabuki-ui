@@ -3,6 +3,7 @@ import Image from "next/image";
 import {
   contrast,
   opacity,
+  brightness,
   Page,
   ThemeProvider,
   useTheme,
@@ -12,13 +13,57 @@ import {
   CssBaseline,
   Spacing,
 } from "@wipsie/ui";
-import React, { forwardRef } from "react";
-import { CSS, createStitches, VariantProps } from "@stitches/react";
+import React, { forwardRef, useCallback, useMemo } from "react";
+import {
+  CSS,
+  createStitches,
+  VariantProps,
+  $$ThemeValue,
+} from "@stitches/react";
 
 type CommonProps = {
   as?: keyof JSX.IntrinsicElements;
   css?: CSS;
 };
+
+// get to know if is a theme palette color
+function isThemePalette(type: any) {
+  if (typeof type !== "string") return;
+  switch (type) {
+    case "primary":
+    case "secondary":
+    case "success":
+    case "info":
+    case "warning":
+    case "danger":
+    case "basic":
+      return true;
+    default:
+      return false;
+  }
+}
+
+// get to know if is a theme palette color including the backgrounds
+function isThemePaletteFull(type: string) {
+  if (typeof type !== "string") return;
+  switch (type) {
+    case "primary":
+    case "secondary":
+    case "success":
+    case "info":
+    case "warning":
+    case "danger":
+    case "basic":
+    case "background":
+    case "shade":
+    case "highlight":
+    case "text":
+    case "subtext":
+      return true;
+    default:
+      return false;
+  }
+}
 
 type OldButtonProps = {
   /**
@@ -213,12 +258,32 @@ const Stitches = createStitches({
       roundBottom: `0 0 ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius}`,
       roundRight: `0 ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius} 0`,
       roundLeft: `${themeDefaultConfigs.roundRadius} 0 0 ${themeDefaultConfigs.roundRadius}`,
+      roundTopRight: `0 ${themeDefaultConfigs.roundRadius} 0 0`,
+      roundTopLeft: `${themeDefaultConfigs.roundRadius} 0 0 0`,
+      roundBottomLeft: `0 0 0 ${themeDefaultConfigs.roundRadius}`,
+      roundBottomRight: `0 0 ${themeDefaultConfigs.roundRadius} 0`,
+      roundBottomRightDrop: `${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius} 0 ${themeDefaultConfigs.roundRadius}`,
+      roundBottomLeftDrop: `${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius} 0`,
+      roundTopRightDrop: `${themeDefaultConfigs.roundRadius} 0 ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius}`,
+      roundTopLeftDrop: `0 ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius} ${themeDefaultConfigs.roundRadius}`,
+      roundOpposite1: `${themeDefaultConfigs.roundRadius} 0 ${themeDefaultConfigs.roundRadius} 0`,
+      roundOpposite2: `0 ${themeDefaultConfigs.roundRadius} 0 ${themeDefaultConfigs.roundRadius}`,
 
       rounded: themeDefaultConfigs.roundedRadius,
       roundedTop: `${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} 0 0`,
       roundedBottom: `0 0 ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius}`,
       roundedRight: `0 ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} 0`,
       roundedLeft: `${themeDefaultConfigs.roundedRadius} 0 0 ${themeDefaultConfigs.roundedRadius}`,
+      roundedTopRight: `0 ${themeDefaultConfigs.roundedRadius} 0 0`,
+      roundedTopLeft: `${themeDefaultConfigs.roundedRadius} 0 0 0`,
+      roundedBottomRight: `0 0 0 ${themeDefaultConfigs.roundedRadius}`,
+      roundedBottomLeft: `0 0 ${themeDefaultConfigs.roundedRadius} 0`,
+      roundedTopRightBottom: `${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} 0 ${themeDefaultConfigs.roundedRadius}`,
+      roundedTopLeftBottom: `${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} 0`,
+      roundedBottomRightTop: `${themeDefaultConfigs.roundedRadius} 0 ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius}`,
+      roundedBottomLeftTop: `0 ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius} ${themeDefaultConfigs.roundedRadius}`,
+      roundedOpposite1: `${themeDefaultConfigs.roundedRadius} 0 ${themeDefaultConfigs.roundedRadius} 0`,
+      roundedOpposite2: `0 ${themeDefaultConfigs.roundedRadius} 0 ${themeDefaultConfigs.roundedRadius}`,
 
       square: themeDefaultConfigs.squareRadius,
     },
@@ -292,8 +357,6 @@ const Stitches = createStitches({
     bp1: "(min-width: 480px)",
   },
   utils: {
-    contrastColor: (value) => ({ color: contrast(value) }),
-
     // margin utils
     m: (value) => ({ margin: value }),
     mt: (value) => ({ marginTop: value }),
@@ -381,6 +444,24 @@ const getDefaultTransition = (defaultValue = "normal") =>
 const defaultTransition = getDefaultTransition();
 
 // BG COLOR
+type TextColorVariants = VariantProps<typeof defaultTextColor>;
+type TextColorProperty = TextColorVariants["textColor"];
+const getDefaultTextColor = (defaultValue = "text") =>
+  Stitches.css({
+    variants: {
+      textColor: {
+        ...themeColorset("$$textColor"),
+        inherit: { color: "inherit" },
+        contrast: {},
+      },
+    },
+    defaultVariants: {
+      textColor: defaultValue,
+    },
+  });
+const defaultTextColor = getDefaultTextColor();
+
+// BG COLOR
 type BgColorVariants = VariantProps<typeof defaultBgColor>;
 type BgColorProperty = BgColorVariants["bgColor"];
 const getDefaultBgColor = (defaultValue = "primary") =>
@@ -420,12 +501,32 @@ const getDefaultShapes = (defaultValue = "round") =>
         roundBottom: { $$shape: "$shapes$roundBottom" },
         roundLeft: { $$shape: "$shapes$roundLeft" },
         roundRight: { $$shape: "$shapes$roundRight" },
+        roundTopLeft: { $$shape: "$shapes$roundTopLeft" },
+        roundTopRight: { $$shape: "$shapes$roundTopRight" },
+        roundBottomRight: { $$shape: "$shapes$roundBottomRight" },
+        roundBottomLeft: { $$shape: "$shapes$roundBottomLeft" },
+        roundBottomLeftDrop: { $$shape: "$shapes$roundBottomLeftDrop" },
+        roundBottomRightDrop: { $$shape: "$shapes$roundBottomRightDrop" },
+        roundTopLeftDrop: { $$shape: "$shapes$roundTopLeftDrop" },
+        roundTopRightDrop: { $$shape: "$shapes$roundTopRightDrop" },
+        roundOpposite1: { $$shape: "$shapes$roundOpposite1" },
+        roundOpposite2: { $$shape: "$shapes$roundOpposite2" },
 
         rounded: { $$shape: "$shapes$rounded" },
         roundedTop: { $$shape: "$shapes$roundedTop" },
         roundedBottom: { $$shape: "$shapes$roundedBottom" },
         roundedLeft: { $$shape: "$shapes$roundedLeft" },
         roundedRight: { $$shape: "$shapes$roundedRight" },
+        roundedTopLeft: { $$shape: "$shapes$roundedTopLeft" },
+        roundedTopRight: { $$shape: "$shapes$roundedTopRight" },
+        roundedBottomLeft: { $$shape: "$shapes$roundedBottomLeft" },
+        roundedBottomRight: { $$shape: "$shapes$roundedBottomRight" },
+        roundedTopLeftBottom: { $$shape: "$shapes$roundedTopLeftBottom" },
+        roundedTopRightBottom: { $$shape: "$shapes$roundedTopRightBottom" },
+        roundedBottomLeftTop: { $$shape: "$shapes$roundedBottomLeftTop" },
+        roundedBottomRightTop: { $$shape: "$shapes$roundedBottomRightTop" },
+        roundedOpposite1: { $$shape: "$shapes$roundedOpposite1" },
+        roundedOpposite2: { $$shape: "$shapes$roundedOpposite2" },
 
         square: { $$shape: "$shapes$square" },
       },
@@ -590,8 +691,8 @@ const getButtonSizes = (defaultValue = "medium") =>
         small: { padding: "6px 8px", fontSize: "0.75rem" },
         medium: { padding: "8px 10px", fontSize: "0.875rem" },
         large: { padding: "10px 14px", fontSize: "1rem" },
-        huge: { padding: "12px 16px", fontSize: "1.125rem" },
-        colossal: { padding: "14px 18px", fontSize: "1.3rem" },
+        huge: { padding: "12px 16px", fontSize: "1.1rem" },
+        colossal: { padding: "14px 18px", fontSize: "1.25rem" },
       },
     },
     defaultVariants: {
@@ -636,6 +737,7 @@ const StyledButton = Stitches.styled(
   "button",
   getDefaultBgColor(),
   getDefaultBgColorHover(),
+  getDefaultTextColor("contrast"),
   getDefaultShapes(),
   getButtonSizes(),
   getButtonAlign(),
@@ -664,14 +766,21 @@ const StyledButton = Stitches.styled(
           },
         },
         outlined: {
-          backgroundColor: "$$bgColor",
+          backgroundColor: "transparent",
           borderColor: "$$bgColor",
           "&:hover": {
-            backgroundColor: "$$bgColorHover",
+            backgroundColor: "transparent",
             borderColor: "$$bgColorHover",
           },
         },
-        ghost: {},
+        ghost: {
+          backgroundColor: "transparent",
+          borderColor: "transparent",
+          "&:hover": {
+            backgroundColor: "transparent",
+            borderColor: "transparent",
+          },
+        },
       },
 
       // Chip
@@ -686,23 +795,11 @@ const StyledButton = Stitches.styled(
       disabled: {
         true: {
           cursor: "not-allowed",
-          opacity: 0.5,
-          "&:hover": {
-            backgroundColor: "$$bgColor",
-          },
+          "&:hover": {},
         },
         false: {},
       },
     },
-
-    // compoundVariants: [
-    //   {
-    //     variant: "contained",
-    //     css: {
-    //       // backgroundColor: "$primary",
-    //     },
-    //   },
-    // ],
 
     defaultVariants: {
       variant: "contained",
@@ -711,17 +808,159 @@ const StyledButton = Stitches.styled(
   }
 );
 
+const fixBtnBgColor = (props: ButtonProps, theme: any) => {
+  const { variant, bgColor, disabled }: any = props;
+
+  if (disabled) {
+    return {
+      backgroundColor: opacity(theme.palette.shade, 100),
+    };
+  }
+
+  if (isThemePalette(bgColor)) {
+    switch (variant) {
+      case "outlined":
+        return {
+          backgroundColor: "transparent",
+        };
+      case "ghost":
+        return {
+          backgroundColor: "transparent",
+        };
+      default:
+      case "contained":
+        return {
+          backgroundColor: theme.palette[bgColor][500],
+        };
+    }
+  }
+
+  return {};
+};
+
+const fixBtnBgColorHover = (props: ButtonProps, theme: any) => {
+  const { variant, bgColor, bgColorHover, disabled }: any = props;
+
+  if (disabled) {
+    return {
+      backgroundColor: opacity(theme.palette.shade, 100),
+    };
+  }
+  if (!bgColorHover && isThemePalette(bgColor)) {
+    switch (variant) {
+      case "outlined":
+        return {
+          backgroundColor: opacity(theme.palette[bgColor][500], 8),
+        };
+      case "ghost":
+        return {
+          backgroundColor: opacity(theme.palette[bgColor][500], 8),
+        };
+      case "contained":
+      default:
+        return {
+          backgroundColor: theme.palette[bgColor][300],
+        };
+    }
+  }
+
+  return {};
+};
+
+const fixBtnTextColor = (props: any, theme: any) => {
+  const { variant, bgColor, textColor, disabled }: any = props;
+
+  if (disabled) {
+    return { color: opacity(theme.palette.text, 40) };
+  }
+
+  if (textColor === "contrast" && isThemePalette(bgColor)) {
+    switch (variant) {
+      case "outlined":
+      case "ghost":
+        return {
+          color: theme.palette[bgColor][500],
+        };
+      case "contained":
+      default:
+        return {
+          color: contrast(theme.palette[bgColor][500]),
+        };
+    }
+  }
+
+  return {};
+};
+
+const fixBtnBorderColor = (props: ButtonProps, theme: any) => {
+  const { variant, bgColor, disabled }: any = props;
+
+  if (disabled) {
+    return {
+      borderColor: opacity(theme.palette.shade, 100),
+    };
+  }
+
+  if (isThemePalette(bgColor)) {
+    switch (variant) {
+      case "ghost":
+        return {
+          borderColor: "transparent",
+        };
+      case "outlined":
+      case "contained":
+      default:
+        return {
+          borderColor: theme.palette[bgColor][500],
+        };
+    }
+  }
+
+  return {};
+};
+
+const fixBtnBorderColorHover = (props: ButtonProps, theme: any) => {
+  const { variant, bgColor, bgColorHover, disabled }: any = props;
+
+  if (disabled) {
+    return {
+      borderColor: opacity(theme.palette.shade, 100),
+    };
+  }
+
+  if (!bgColorHover && isThemePalette(bgColor)) {
+    switch (variant) {
+      case "ghost":
+        return {
+          borderColor: "transparent",
+        };
+      case "outlined":
+        return {
+          borderColor: theme.palette[bgColor][500],
+        };
+      case "contained":
+      default:
+        return {
+          borderColor: theme.palette[bgColor][300],
+        };
+    }
+  }
+
+  return {};
+};
+
 const ButtonNew = forwardRef(
   (props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
     const {
-      variant,
-      chip,
+      variant = "contained",
+      chip = false,
       bgColor = "primary",
-      bgColorHover,
-      shape,
-      size,
-      disabled,
-      transition,
+      bgColorHover = null,
+      textColor = "contrast",
+      shape = "round",
+      size = "medium",
+      disabled = false,
+      transition = "normal",
 
       // content
       children,
@@ -729,7 +968,7 @@ const ButtonNew = forwardRef(
       startAdornment,
       endAdornment,
 
-      // margin & padding
+      // margin
       m,
       mx,
       my,
@@ -737,6 +976,8 @@ const ButtonNew = forwardRef(
       mr,
       mb,
       ml,
+
+      // padding
       p,
       px,
       py,
@@ -747,7 +988,7 @@ const ButtonNew = forwardRef(
 
       // other
       as = null,
-      css,
+      css = {},
       ...otherProps
     } = props;
     const theme = useTheme();
@@ -757,17 +998,31 @@ const ButtonNew = forwardRef(
         variant={variant}
         chip={chip}
         bgColor={bgColor}
-        bgColorHover={
-          bgColorHover || (bgColor ? (`${bgColor}_light` as any) : null)
-        }
+        bgColorHover={bgColorHover}
         shape={shape}
         disabled={disabled}
         size={size}
         transition={transition}
         as={as}
+        ref={ref}
         css={{
           ...cssMargin({ m, mx, my, mt, mr, mb, ml }),
           ...cssPadding({ p, px, py, pt, pr, pb, pl }),
+          ...fixBtnBgColor({ variant, bgColor, disabled }, theme),
+          ...fixBtnTextColor({ variant, bgColor, textColor, disabled }, theme),
+          ...fixBtnBorderColor({ variant, bgColor, disabled }, theme),
+
+          "&:hover": {
+            ...fixBtnBgColorHover(
+              { variant, bgColor, bgColorHover, disabled },
+              theme
+            ),
+            ...fixBtnBorderColorHover(
+              { variant, bgColor, bgColorHover, disabled },
+              theme
+            ),
+          },
+
           ...css,
         }}
         {...(otherProps as any)}
@@ -794,41 +1049,108 @@ export default function Home() {
     <ThemeProvider theme="light">
       <CssBaseline />
       <Page>
-        <ButtonNew variant="contained" bgColor="danger" shape="square">
-          Hello
-        </ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew variant="outlined" mx={9} p={4} shape="roundedBottom">
-          Hello
-        </ButtonNew>
         <Spacing height={2} />
         <ButtonNew
-          p={4}
-          variant="contained"
-          mx={9}
-          shape="roundedBottom"
-          disabled
-          className="awdaw"
-          transition="slower"
-        >
-          Hello
-        </ButtonNew>
+          size="large"
+          m={1}
+          shape="round"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundTop"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundBottom"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundLeft"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundRight"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundTopLeft"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundTopRight"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundBottomRight"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundBottomLeft"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundTopLeftDrop"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="large"
+          m={1}
+          shape="roundBottomLeftDrop"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          m={1}
+          shape="roundTopRightDrop"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="huge"
+          m={1}
+          shape="roundBottomRightDrop"
+          label="Hello"
+          variant="outlined"
+        />
+        <ButtonNew
+          size="colossal"
+          m={1}
+          shape="roundOpposite1"
+          label="Hello"
+          variant="outlined"
+        />
         <Spacing height={2} />
-        <ButtonNew size="micro">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="mini">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="small">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="medium">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="large">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="huge">Hello</ButtonNew>
-        <Spacing height={2} />
-        <ButtonNew size="colossal">Hello</ButtonNew>
-        <Spacing height={2} />
-        <WipsieButton>Hello2</WipsieButton>
+        <WipsieButton variant="ghost" size="large">
+          Hello2
+        </WipsieButton>
       </Page>
     </ThemeProvider>
   );
