@@ -18,13 +18,10 @@ import {
   CSS,
   createStitches,
   VariantProps,
+  DefaultThemeMap,
   $$ThemeValue,
 } from "@stitches/react";
-
-type CommonProps = {
-  as?: keyof JSX.IntrinsicElements;
-  css?: CSS;
-};
+import Stitches from "@stitches/react/types/stitches";
 
 // get to know if is a theme palette color
 function isThemePalette(type: any) {
@@ -358,24 +355,48 @@ const Stitches = createStitches({
   },
   utils: {
     // margin utils
-    m: (value) => ({ margin: value }),
-    mt: (value) => ({ marginTop: value }),
-    mr: (value) => ({ marginRight: value }),
-    mb: (value) => ({ marginBottom: value }),
-    ml: (value) => ({ marginLeft: value }),
-    mx: (value) => ({ marginLeft: value, marginRight: value }),
-    my: (value) => ({ marginTop: value, marginBottom: value }),
+    m: (value: string | number) => ({ margin: value }),
+    mt: (value: string | number) => ({ marginTop: value }),
+    mr: (value: string | number) => ({ marginRight: value }),
+    mb: (value: string | number) => ({ marginBottom: value }),
+    ml: (value: string | number) => ({ marginLeft: value }),
+    mx: (value: string | number) => ({ marginLeft: value, marginRight: value }),
+    my: (value: string | number) => ({ marginTop: value, marginBottom: value }),
 
     // padding utils
-    p: (value) => ({ padding: value }),
-    pt: (value) => ({ paddingTop: value }),
-    pr: (value) => ({ paddingRight: value }),
-    pb: (value) => ({ paddingBottom: value }),
-    pl: (value) => ({ paddingLeft: value }),
-    px: (value) => ({ paddingLeft: value, paddingRight: value }),
-    py: (value) => ({ paddingTop: value, paddingBottom: value }),
+    p: (value: string | number) => ({ padding: value }),
+    pt: (value: string | number) => ({ paddingTop: value }),
+    pr: (value: string | number) => ({ paddingRight: value }),
+    pb: (value: string | number) => ({ paddingBottom: value }),
+    pl: (value: string | number) => ({ paddingLeft: value }),
+    px: (value: string | number) => ({
+      paddingLeft: value,
+      paddingRight: value,
+    }),
+    py: (value: string | number) => ({
+      paddingTop: value,
+      paddingBottom: value,
+    }),
+
+    noScroll: (value: boolean) =>
+      value
+        ? {
+            scrollbarWidth: "none" /* Firefox */,
+            "-ms-overflow-style": "none" /* IE and Edge */,
+
+            "&::-webkit-scrollbar": {
+              display: "none",
+            } /* Chrome, Safari, Opera */,
+          }
+        : {},
   },
 });
+
+// Common types for components
+type CommonProps = {
+  as?: keyof JSX.IntrinsicElements;
+  css?: CSS<typeof Stitches.config>;
+};
 
 // MARGINS
 type AllowedCssMargin = Partial<{
@@ -430,6 +451,7 @@ const getDefaultTransition = (defaultValue = "normal") =>
   Stitches.css({
     variants: {
       transition: {
+        none: { transition: "$transitions$none" },
         faster: { transition: "$transitions$faster" },
         fast: { transition: "$transitions$fast" },
         normal: { transition: "$transitions$normal" },
@@ -460,6 +482,23 @@ const getDefaultTextColor = (defaultValue = "text") =>
     },
   });
 const defaultTextColor = getDefaultTextColor();
+
+// BG COLOR
+type NoScrollVariants = VariantProps<typeof defaultNoScroll>;
+type NoScrollProperty = NoScrollVariants["noScroll"];
+const getDefaultNoScroll = (defaultValue = false) =>
+  Stitches.css({
+    variants: {
+      noScroll: {
+        true: { noScroll: true },
+        false: { noScroll: false },
+      },
+    },
+    defaultVariants: {
+      noScroll: defaultValue,
+    },
+  });
+const defaultNoScroll = getDefaultNoScroll();
 
 // BG COLOR
 type BgColorVariants = VariantProps<typeof defaultBgColor>;
@@ -732,6 +771,18 @@ const getButtonAlign = (defaultValue = "medium") =>
   });
 const buttonAlign = getButtonAlign();
 
+const StyledContainer = Stitches.styled(
+  "div",
+  getDefaultBgColor("background"),
+  getDefaultBgColorHover(),
+  getDefaultTextColor("contrast"),
+  getDefaultShapes(),
+  getDefaultTextVariants("body1"),
+  {
+    backgroundColor: "$$bgColor",
+  }
+);
+
 type DefaultButtonProps = VariantProps<typeof StyledButton>;
 const StyledButton = Stitches.styled(
   "button",
@@ -743,6 +794,7 @@ const StyledButton = Stitches.styled(
   getButtonAlign(),
   getDefaultTextVariants("label"),
   getDefaultTransition(),
+  getDefaultNoScroll(),
   {
     borderStyle: "solid",
     borderWidth: "1px",
@@ -1052,10 +1104,15 @@ export default function Home() {
         <Spacing height={2} />
         <ButtonNew
           size="large"
-          m={1}
           shape="round"
-          label="Hello"
-          variant="outlined"
+          label="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          variant="contained"
+          noScroll={true}
+          transition="none"
+          css={{
+            overflow: "scroll",
+            maxWidth: "50px",
+          }}
         />
         <ButtonNew
           size="large"
@@ -1063,13 +1120,14 @@ export default function Home() {
           shape="roundTop"
           label="Hello"
           variant="outlined"
+          css={{}}
         />
         <ButtonNew
           size="large"
           m={1}
-          shape="roundBottom"
+          shape="roundOpposite1"
           label="Hello"
-          variant="outlined"
+          variant="contained"
         />
         <ButtonNew
           size="large"
@@ -1147,10 +1205,19 @@ export default function Home() {
           label="Hello"
           variant="outlined"
         />
+        <ButtonNew
+          m={1}
+          shape="roundOpposite1"
+          label="Hello"
+          variant="outlined"
+          css={{}}
+        />
         <Spacing height={2} />
         <WipsieButton variant="ghost" size="large">
           Hello2
         </WipsieButton>
+
+        <StyledContainer>awdawdawdawd</StyledContainer>
       </Page>
     </ThemeProvider>
   );
