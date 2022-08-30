@@ -1,0 +1,62 @@
+export const themeColorset = (colorset: string) => ({
+  background: { [colorset]: "$colors$background" },
+  highlight: { [colorset]: "$colors$highlight" },
+  shade: { [colorset]: "$colors$shade" },
+  text: { [colorset]: "$colors$text" },
+  subtext: { [colorset]: "$colors$subtext" },
+
+  primary_lighter: { [colorset]: "$colors$primary100" },
+  primary_light: { [colorset]: "$colors$primary300" },
+  primary: { [colorset]: "$colors$primary" },
+  primary_dark: { [colorset]: "$colors$primary700" },
+  primary_darker: { [colorset]: "$colors$primary900" },
+
+  secondary_lighter: { [colorset]: "$colors$secondary100" },
+  secondary_light: { [colorset]: "$colors$secondary300" },
+  secondary: { $$bgColor: "$colors$secondary" },
+  secondary_dark: { [colorset]: "$colors$secondary700" },
+  secondary_darker: { [colorset]: "$colors$secondary900" },
+
+  success_lighter: { [colorset]: "$colors$success100" },
+  success_light: { [colorset]: "$colors$success300" },
+  success: { [colorset]: "$colors$success" },
+  success_dark: { [colorset]: "$colors$success700" },
+  success_darker: { [colorset]: "$colors$success900" },
+
+  warning_lighter: { [colorset]: "$colors$warning100" },
+  warning_light: { [colorset]: "$colors$warning300" },
+  warning: { [colorset]: "$colors$warning" },
+  warning_dark: { [colorset]: "$colors$warning700" },
+  warning_darker: { [colorset]: "$colors$warning900" },
+
+  danger_lighter: { [colorset]: "$colors$danger100" },
+  danger_light: { [colorset]: "$colors$danger300" },
+  danger: { [colorset]: "$colors$danger" },
+  danger_dark: { [colorset]: "$colors$danger700" },
+  danger_darker: { [colorset]: "$colors$danger900" },
+
+  info_lighter: { [colorset]: "$colors$info100" },
+  info_light: { [colorset]: "$colors$info300" },
+  info: { [colorset]: "$colors$info" },
+  info_dark: { [colorset]: "$colors$info700" },
+  info_darker: { [colorset]: "$colors$info900" },
+
+  basic_lighter: { [colorset]: "$colors$basic100" },
+  basic_light: { [colorset]: "$colors$basic300" },
+  basic: { [colorset]: "$colors$basic" },
+  basic_dark: { [colorset]: "$colors$basic700" },
+  basic_darker: { [colorset]: "$colors$basic900" },
+
+  // HTML Normal Colors
+  red: { [colorset]: "red" },
+  orange: { [colorset]: "orange" },
+  yellow: { [colorset]: "yellow" },
+  green: { [colorset]: "green" },
+  teal: { [colorset]: "teal" },
+  blue: { [colorset]: "blue" },
+  indigo: { [colorset]: "indigo" },
+  purple: { [colorset]: "purple" },
+  pink: { [colorset]: "pink" },
+  brown: { [colorset]: "brown" },
+  gray: { [colorset]: "gray" },
+});
