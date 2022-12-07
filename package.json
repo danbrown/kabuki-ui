@@ -1,6 +1,7 @@
 {
-  "name": "new",
-  "private": true,
+  "name": "@kabuki/ui",
+  "private": false,
+  "version": "0.0.001",
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",
