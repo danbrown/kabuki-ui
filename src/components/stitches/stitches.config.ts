@@ -1,5 +1,6 @@
 export const themeDefaultConfigs = {
   unit: 8,
+  border: 1,
   roundRadius: "1.5em",
   roundedRadius: "0.7em",
   squareRadius: "0em",

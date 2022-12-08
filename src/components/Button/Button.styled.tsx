@@ -35,7 +35,7 @@ export const _ButtonStyled = Stitches.styled(
 
   {
     borderStyle: "solid",
-    borderWidth: "1px",
+    borderWidth: Stitches.theme.space.border.value,
 
     position: "relative",
     overflow: "hidden",

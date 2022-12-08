@@ -1,5 +1,5 @@
+import { Modify } from "../types/modify";
 import { VariantProps } from "@stitches/react";
-import { Modify, useTheme } from "@wipsie/ui";
 import { AllowedCssMargin, cssMargin } from "../shared/margin";
 import { AllowedCssPadding, cssPadding } from "../shared/padding";
 import {

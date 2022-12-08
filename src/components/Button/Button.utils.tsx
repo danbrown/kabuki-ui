@@ -13,12 +13,19 @@ export const fixButtonBgColor = (props: ButtonProps) => {
 export const fixButtonBgColorHover = (props: ButtonProps) => {
   const { variant, bgColor, bgColorHover, disabled } = props;
 
-  if (!disabled && !bgColorHover && isThemePalette(bgColor)) {
+  if (!disabled && !bgColorHover) {
     switch (variant) {
       case "contained":
-        return {
-          backgroundColor: Stitches.theme.colors[`${bgColor}300`].value,
-        };
+        if (isThemePalette(bgColor)) {
+          return {
+            backgroundColor: Stitches.theme.colors[`${bgColor}Light`].value,
+          };
+        } else {
+          return {
+            backgroundColor: Stitches.theme.colors[`${bgColor}`].value,
+          };
+        }
+
       case "outlined":
       case "ghost":
       case "toon":
@@ -38,7 +45,7 @@ export const fixButtonBgColorHover = (props: ButtonProps) => {
 export const fixButtonTextColor = (props: any) => {
   const { variant, bgColor, textColor, disabled }: any = props;
 
-  if (!disabled && textColor === "contrast" && isThemePalette(bgColor)) {
+  if (!disabled && textColor === "contrast") {
     switch (variant) {
       case "contained":
         return { color: contrast(Stitches.theme.colors[`${bgColor}`].value) };
@@ -77,7 +84,7 @@ export const fixButtonBorderColorHover = (props: ButtonProps) => {
   if (!disabled && !bgColorHover && isThemePalette(bgColor)) {
     switch (variant) {
       case "contained":
-        return { borderColor: Stitches.theme.colors[`${bgColor}300`].value };
+        return { borderColor: Stitches.theme.colors[`${bgColor}Light`].value };
       case "ghost":
         return { borderColor: "transparent" };
       case "outlined":

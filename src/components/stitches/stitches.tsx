@@ -1,6 +1,7 @@
-import { lightTheme } from "@wipsie/ui";
 import { createStitches } from "@stitches/react";
+import { lightTheme } from "../themes/light";
 import { themeDefaultConfigs } from "./stitches.config";
+import { htmlColors } from "./utils/htmlColors";
 
 // returns a function that takes a value and returns an object with the prop and value, used in margin and padding utils
 const passProp =
@@ -55,54 +56,56 @@ export const Stitches = createStitches({
       subtext: lightTheme.palette.subtext,
       shadow: lightTheme.palette.basic.shadow,
 
-      primary100: lightTheme.palette.primary[100],
-      primary300: lightTheme.palette.primary[300],
+      primaryLighter: lightTheme.palette.primary[100],
+      primaryLight: lightTheme.palette.primary[300],
       primary: lightTheme.palette.primary[500],
-      primary700: lightTheme.palette.primary[700],
-      primary900: lightTheme.palette.primary[900],
+      primaryDark: lightTheme.palette.primary[700],
+      primaryDarker: lightTheme.palette.primary[900],
       primaryShadow: lightTheme.palette.primary.shadow,
 
-      secondary100: lightTheme.palette.secondary[100],
-      secondary300: lightTheme.palette.secondary[300],
+      secondaryLighter: lightTheme.palette.secondary[100],
+      secondaryLight: lightTheme.palette.secondary[300],
       secondary: lightTheme.palette.secondary[500],
-      secondary700: lightTheme.palette.secondary[700],
-      secondary900: lightTheme.palette.secondary[900],
+      secondaryDark: lightTheme.palette.secondary[700],
+      secondaryDarker: lightTheme.palette.secondary[900],
       secondaryShadow: lightTheme.palette.secondary.shadow,
 
-      danger100: lightTheme.palette.danger[100],
-      danger300: lightTheme.palette.danger[300],
+      dangerLighter: lightTheme.palette.danger[100],
+      dangerLight: lightTheme.palette.danger[300],
       danger: lightTheme.palette.danger[500],
-      danger700: lightTheme.palette.danger[700],
-      danger900: lightTheme.palette.danger[900],
+      dangerDark: lightTheme.palette.danger[700],
+      dangerDarker: lightTheme.palette.danger[900],
       dangerShadow: lightTheme.palette.danger.shadow,
 
-      warning100: lightTheme.palette.warning[100],
-      warning300: lightTheme.palette.warning[300],
+      warningLighter: lightTheme.palette.warning[100],
+      warningLight: lightTheme.palette.warning[300],
       warning: lightTheme.palette.warning[500],
-      warning700: lightTheme.palette.warning[700],
-      warning900: lightTheme.palette.warning[900],
+      warningDark: lightTheme.palette.warning[700],
+      warningDarker: lightTheme.palette.warning[900],
       warningShadow: lightTheme.palette.warning.shadow,
 
-      success100: lightTheme.palette.success[100],
-      success300: lightTheme.palette.success[300],
+      successLighter: lightTheme.palette.success[100],
+      successLight: lightTheme.palette.success[300],
       success: lightTheme.palette.success[500],
-      success700: lightTheme.palette.success[700],
-      success900: lightTheme.palette.success[900],
+      successDark: lightTheme.palette.success[700],
+      successDarker: lightTheme.palette.success[900],
       successShadow: lightTheme.palette.success.shadow,
 
-      info100: lightTheme.palette.info[100],
-      info300: lightTheme.palette.info[300],
+      infoLighter: lightTheme.palette.info[100],
+      infoLight: lightTheme.palette.info[300],
       info: lightTheme.palette.info[500],
-      info700: lightTheme.palette.info[700],
-      info900: lightTheme.palette.info[900],
+      infoDark: lightTheme.palette.info[700],
+      infoDarker: lightTheme.palette.info[900],
       infoShadow: lightTheme.palette.info.shadow,
 
-      basic100: lightTheme.palette.basic[100],
-      basic300: lightTheme.palette.basic[300],
+      basicLighter: lightTheme.palette.basic[100],
+      basicLight: lightTheme.palette.basic[300],
       basic: lightTheme.palette.basic[500],
-      basic700: lightTheme.palette.basic[700],
-      basic900: lightTheme.palette.basic[900],
+      basicDark: lightTheme.palette.basic[700],
+      basicDarker: lightTheme.palette.basic[900],
       basicShadow: lightTheme.palette.basic.shadow,
+
+      ...htmlColors,
     },
     transitions: {
       none: "none",
@@ -115,6 +118,7 @@ export const Stitches = createStitches({
     space: {
       none: 0,
       unit: themeDefaultConfigs.unit,
+      border: themeDefaultConfigs.border,
     },
   },
 

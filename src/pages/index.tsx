@@ -26,9 +26,10 @@ export default function Home() {
         shape="roundTop"
         label="Toon Button"
         variant="toon"
-        shadowColor="black"
         // bgColor="info"
-        // bgColor="primary_light"
+        bgColor="black"
+        textColor="white"
+        shadowColor="black"
       />
       <Button
         size="large"

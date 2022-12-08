@@ -1,5 +1,4 @@
 import { VariantProps } from "@stitches/react";
-import { Modify, useTheme } from "@wipsie/ui";
 import { forwardRef } from "react";
 import { AllowedCssMargin, cssMargin } from "../shared/margin";
 import { AllowedCssPadding, cssPadding } from "../shared/padding";
@@ -66,7 +65,6 @@ export const Button = forwardRef(
       css = {},
       ...otherProps
     } = props;
-    const theme = useTheme();
 
     return (
       <_ButtonStyled
