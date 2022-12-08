@@ -3,7 +3,7 @@ export const themeDefaultConfigs = {
   roundRadius: "1.5em",
   roundedRadius: "0.7em",
   squareRadius: "0em",
-  transitions: {
+  timings: {
     faster: {
       duration: "50ms",
       easing: "ease-in-out",

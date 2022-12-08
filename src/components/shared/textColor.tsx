@@ -1,6 +1,6 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../stitches.config";
-import { themeColorset } from "../stitches/themeColorset";
+import { Stitches } from "../stitches/stitches";
+import { themeColorset } from "../stitches/utils/themeColorset";
 
 // TEXT COLOR
 export type TextColorVariants = VariantProps<typeof defaultTextColor>;

@@ -1,4 +1,4 @@
-import { themeDefaultConfigs } from "../theme.config";
+import { Stitches } from "../stitches/stitches";
 
 // MARGINS
 export type AllowedCssMargin = Partial<{
@@ -13,13 +13,21 @@ export type AllowedCssMargin = Partial<{
 
 export const cssMargin = (props: AllowedCssMargin) => {
   const { m, mb, ml, mr, mt, mx, my } = props;
-  return {
-    mb: typeof mb === "number" ? `${mb * themeDefaultConfigs.unit}px` : mb,
-    ml: typeof ml === "number" ? `${ml * themeDefaultConfigs.unit}px` : ml,
-    mr: typeof mr === "number" ? `${mr * themeDefaultConfigs.unit}px` : mr,
-    mt: typeof mt === "number" ? `${mt * themeDefaultConfigs.unit}px` : mt,
-    mx: typeof mx === "number" ? `${mx * themeDefaultConfigs.unit}px` : mx,
-    my: typeof my === "number" ? `${my * themeDefaultConfigs.unit}px` : my,
-    m: typeof m === "number" ? `${m * themeDefaultConfigs.unit}px` : m,
-  };
+
+  function getMargin(margin: number | string) {
+    return typeof margin === "number"
+      ? `${margin * parseFloat(Stitches.theme.space.unit.value)}px`
+      : margin;
+  }
+
+  let result = {};
+  m && (result = { ...result, m: getMargin(m) });
+  mx && (result = { ...result, mx: getMargin(mx) });
+  my && (result = { ...result, my: getMargin(my) });
+  mt && (result = { ...result, mt: getMargin(mt) });
+  mr && (result = { ...result, mr: getMargin(mr) });
+  mb && (result = { ...result, mb: getMargin(mb) });
+  ml && (result = { ...result, ml: getMargin(ml) });
+
+  return result;
 };

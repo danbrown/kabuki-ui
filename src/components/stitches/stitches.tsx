@@ -1,9 +1,16 @@
 import { lightTheme } from "@wipsie/ui";
 import { createStitches } from "@stitches/react";
-import { themeDefaultConfigs } from "./theme.config";
+import { themeDefaultConfigs } from "./stitches.config";
 
+// returns a function that takes a value and returns an object with the prop and value, used in margin and padding utils
+const passProp =
+  (...props: string[]) =>
+  (value: string | number) =>
+    value && props.reduce((acc, prop) => ({ ...acc, [prop]: value }), {});
+
+// The Main Stitches object
 export const Stitches = createStitches({
-  prefix: "wps",
+  prefix: "kbk",
   theme: {
     shapes: {
       round: themeDefaultConfigs.roundRadius,
@@ -99,50 +106,55 @@ export const Stitches = createStitches({
     },
     transitions: {
       none: "none",
-      faster: `${themeDefaultConfigs.transitions.faster.duration} ${themeDefaultConfigs.transitions.faster.easing}`,
-      fast: `${themeDefaultConfigs.transitions.fast.duration} ${themeDefaultConfigs.transitions.fast.easing}`,
-      normal: `${themeDefaultConfigs.transitions.normal.duration} ${themeDefaultConfigs.transitions.normal.easing}`,
-      slow: `${themeDefaultConfigs.transitions.slow.duration} ${themeDefaultConfigs.transitions.slow.easing}`,
-      slower: `${themeDefaultConfigs.transitions.slower.duration} ${themeDefaultConfigs.transitions.slower.easing}`,
+      faster: `${themeDefaultConfigs.timings.faster.duration} ${themeDefaultConfigs.timings.faster.easing}`,
+      fast: `${themeDefaultConfigs.timings.fast.duration} ${themeDefaultConfigs.timings.fast.easing}`,
+      normal: `${themeDefaultConfigs.timings.normal.duration} ${themeDefaultConfigs.timings.normal.easing}`,
+      slow: `${themeDefaultConfigs.timings.slow.duration} ${themeDefaultConfigs.timings.slow.easing}`,
+      slower: `${themeDefaultConfigs.timings.slower.duration} ${themeDefaultConfigs.timings.slower.easing}`,
+    },
+    space: {
+      none: 0,
+      unit: themeDefaultConfigs.unit,
     },
   },
+
   media: {
     bp1: "(min-width: 480px)",
   },
+
   utils: {
     // margin utils
-    m: (value: string | number) => ({ margin: value }),
-    mt: (value: string | number) => ({ marginTop: value }),
-    mr: (value: string | number) => ({ marginRight: value }),
-    mb: (value: string | number) => ({ marginBottom: value }),
-    ml: (value: string | number) => ({ marginLeft: value }),
-    mx: (value: string | number) => ({ marginLeft: value, marginRight: value }),
-    my: (value: string | number) => ({ marginTop: value, marginBottom: value }),
+    m: passProp("margin"),
+    mt: passProp("marginTop"),
+    mr: passProp("marginRight"),
+    mb: passProp("marginBottom"),
+    ml: passProp("marginLeft"),
+    mx: passProp("marginLeft", "marginRight"),
+    my: passProp("marginTop", "marginBottom"),
 
     // padding utils
-    p: (value: string | number) => ({ padding: value }),
-    pt: (value: string | number) => ({ paddingTop: value }),
-    pr: (value: string | number) => ({ paddingRight: value }),
-    pb: (value: string | number) => ({ paddingBottom: value }),
-    pl: (value: string | number) => ({ paddingLeft: value }),
-    px: (value: string | number) => ({
-      paddingLeft: value,
-      paddingRight: value,
-    }),
-    py: (value: string | number) => ({
-      paddingTop: value,
-      paddingBottom: value,
-    }),
+    p: passProp("padding"),
+    pt: passProp("paddingTop"),
+    pr: passProp("paddingRight"),
+    pb: passProp("paddingBottom"),
+    pl: passProp("paddingLeft"),
+    px: passProp("paddingLeft", "paddingRight"),
+    py: passProp("paddingTop", "paddingBottom"),
 
+    // no scroll (disable scrollbars)
     noScroll: (value: boolean) =>
       value
         ? {
-            scrollbarWidth: "none" /* Firefox */,
-            "-ms-overflow-style": "none" /* IE and Edge */,
+            /* Firefox */
+            scrollbarWidth: "none",
 
+            /* IE and Edge */
+            "-ms-overflow-style": "none",
+
+            /* Chrome, Safari, Opera */
             "&::-webkit-scrollbar": {
               display: "none",
-            } /* Chrome, Safari, Opera */,
+            },
           }
         : {},
   },

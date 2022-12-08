@@ -1,5 +1,5 @@
 import { CSS } from "@stitches/react";
-import { Stitches } from "./stitches.config";
+import { Stitches } from "./stitches";
 
 // Common types for components
 export type ComponentCommonProps = {

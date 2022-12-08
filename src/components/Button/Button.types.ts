@@ -2,10 +2,13 @@ import { VariantProps } from "@stitches/react";
 import { Modify, useTheme } from "@wipsie/ui";
 import { AllowedCssMargin, cssMargin } from "../shared/margin";
 import { AllowedCssPadding, cssPadding } from "../shared/padding";
-import { AdornmentProps, ComponentCommonProps } from "../stitches.types";
-import { StyledButton } from "./StyledButton";
+import {
+  AdornmentProps,
+  ComponentCommonProps,
+} from "../stitches/stitches.types";
+import { _ButtonStyled } from "./Button.styled";
 
-export type DefaultButtonProps = VariantProps<typeof StyledButton>;
+export type DefaultButtonProps = VariantProps<typeof _ButtonStyled>;
 
 export type ButtonProps = Modify<
   React.HTMLProps<HTMLButtonElement>,

@@ -3,29 +3,39 @@ import { Modify, useTheme } from "@wipsie/ui";
 import { forwardRef } from "react";
 import { AllowedCssMargin, cssMargin } from "../shared/margin";
 import { AllowedCssPadding, cssPadding } from "../shared/padding";
-import { AdornmentProps, ComponentCommonProps } from "../stitches.types";
+import {
+  AdornmentProps,
+  ComponentCommonProps,
+} from "../stitches/stitches.types";
 import { ButtonProps } from "./Button.types";
 import {
-  fixBtnBgColor,
-  fixBtnBgColorHover,
-  fixBtnBorderColor,
-  fixBtnBorderColorHover,
-  fixBtnTextColor,
-} from "./fixes";
-import { StyledButton } from "./StyledButton";
+  fixButtonBgColor,
+  fixButtonBgColorHover,
+  fixButtonBorderColor,
+  fixButtonBorderColorHover,
+  fixButtonTextColor,
+  fixButtonDisabled,
+  fixButtonDisabledHover,
+} from "./Button.utils";
+import { _ButtonStyled } from "./Button.styled";
 
 export const Button = forwardRef(
   (props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
     const {
       variant = "contained",
       chip = false,
-      bgColor = "primary",
-      bgColorHover = null,
-      textColor = "contrast",
+
       shape = "round",
       size = "medium",
       disabled = false,
       transition = "normal",
+
+      // colors
+      bgColor = "primary",
+      bgColorHover = null,
+      textColor = "contrast",
+      shadowColor = "primary",
+      shadowColorHover = null,
 
       // content
       children,
@@ -59,37 +69,54 @@ export const Button = forwardRef(
     const theme = useTheme();
 
     return (
-      <StyledButton
+      <_ButtonStyled
+        as={as}
+        ref={ref}
+        // button props
         variant={variant}
         chip={chip}
-        bgColor={bgColor}
-        bgColorHover={bgColorHover}
         shape={shape}
         disabled={disabled}
         size={size}
         transition={transition}
-        as={as}
-        ref={ref}
+        // colors
+        bgColor={bgColor}
+        bgColorHover={bgColorHover}
+        textColor={textColor}
+        shadowColor={shadowColor}
+        shadowColorHover={shadowColorHover || shadowColor}
+        // custom css
         css={{
           ...cssMargin({ m, mx, my, mt, mr, mb, ml }),
           ...cssPadding({ p, px, py, pt, pr, pb, pl }),
-          ...fixBtnBgColor({ variant, bgColor, disabled }, theme),
-          ...fixBtnTextColor({ variant, bgColor, textColor, disabled }, theme),
-          ...fixBtnBorderColor({ variant, bgColor, disabled }, theme),
+          ...fixButtonBgColor({ variant, bgColor, disabled }),
+          ...fixButtonTextColor({ variant, bgColor, textColor, disabled }),
+          ...fixButtonBorderColor({ variant, bgColor, disabled }),
+
+          // Disabled
+          ...fixButtonDisabled({ variant, bgColor, disabled }),
 
           "&:hover": {
-            ...fixBtnBgColorHover(
-              { variant, bgColor, bgColorHover, disabled },
-              theme
-            ),
-            ...fixBtnBorderColorHover(
-              { variant, bgColor, bgColorHover, disabled },
-              theme
-            ),
+            ...fixButtonBgColorHover({
+              variant,
+              bgColor,
+              bgColorHover,
+              disabled,
+            }),
+            ...fixButtonBorderColorHover({
+              variant,
+              bgColor,
+              bgColorHover,
+              disabled,
+            }),
+
+            // Disabled
+            ...fixButtonDisabledHover({ variant, bgColor, disabled }),
           },
 
           ...css,
         }}
+        // other props
         {...(otherProps as any)}
       >
         <>
@@ -104,7 +131,7 @@ export const Button = forwardRef(
             <span style={{ paddingLeft: 5 }}>{endAdornment}</span>
           )}
         </>
-      </StyledButton>
+      </_ButtonStyled>
     );
   }
 );

@@ -1,8 +1,7 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../stitches.config";
+import { Stitches } from "../../stitches/stitches";
 
 // BUTTON SIZES
-
 export type ButtonSizeProperty = ButtonSizeVariants["size"];
 export const getButtonSizes = (defaultValue = "medium") =>
   Stitches.css({

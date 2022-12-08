@@ -9,6 +9,15 @@ export function isThemePalette(type: any) {
     case "warning":
     case "danger":
     case "basic":
+      return true;
+    default:
+      return false;
+  }
+}
+
+export function isThemeBgPalette(type: any) {
+  if (typeof type !== "string") return;
+  switch (type) {
     case "background":
     case "shade":
     case "highlight":

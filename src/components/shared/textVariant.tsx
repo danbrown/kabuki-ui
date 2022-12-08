@@ -1,5 +1,5 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../stitches.config";
+import { Stitches } from "../stitches/stitches";
 
 // TEXT VARIANTS
 export type TextVariants = VariantProps<typeof defaultTextVariants>;

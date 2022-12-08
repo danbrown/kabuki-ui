@@ -1,3 +1,4 @@
+// function to populate a property with all the colors in the theme
 export const themeColorset = (colorset: string) => ({
   background: { [colorset]: "$colors$background" },
   highlight: { [colorset]: "$colors$highlight" },
@@ -59,4 +60,8 @@ export const themeColorset = (colorset: string) => ({
   pink: { [colorset]: "pink" },
   brown: { [colorset]: "brown" },
   gray: { [colorset]: "gray" },
+  black: { [colorset]: "black" },
+  white: { [colorset]: "white" },
+  sand: { [colorset]: "sand" },
+  goldenrod: { [colorset]: "goldenrod" },
 });
