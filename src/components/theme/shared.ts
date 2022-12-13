@@ -148,24 +148,7 @@ export const defaultBreakpoints = {
     max: "1920px",
   },
 };
-export const defaultLayout = {
-  spacingUnit: 8,
-  radius: "15px",
-  padding: "1em",
-  gap: "16pt",
-  gapNegative: "-16pt",
-  gapHalf: "8pt",
-  gapHalfNegative: "-8pt",
-  gapQuarter: "4pt",
-  gapQuarterNegative: "-4pt",
-  pageMargin: "16pt",
-  pageWidth: "750pt",
-  pageWidthWithMargin: "782pt",
-  breakpointMobile: defaultBreakpoints.xs.max,
-  breakpointTablet: defaultBreakpoints.sm.max,
-  stroke: "2px",
-  modalIndex: 1000,
-};
+
 export const commonPalette = {
   white: "#ffffff",
   black: "#000000",

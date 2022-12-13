@@ -7,43 +7,63 @@ import {
 } from "@wipsie/ui";
 import React from "react";
 import { Button } from "../components/Button/Button";
-import { Stitches } from "../components/stitches/stitches";
+import { Stitches } from "../components/stitches/stitches.config";
+import { Container } from "../components/Container/Container";
 
 export default function Home() {
   return (
     <Page>
       <Spacing height={2} />
-      <Button
-        size="large"
-        shape="roundBottom"
-        label="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        variant="ghost"
-        transition="none"
-      />
+      <Container
+        display="flex"
+        align="center"
+        bgColor="black"
+        bgColorHover="primary"
+        shape="roundedOpposite1"
+        transition="slower"
+        textColor="white"
+        // clickable
+        m={{
+          "@initial": 1,
+          "@md": 5,
+        }}
+        mt="5px"
+        // css={{
+        //   "&:hover": {
+        //     backgroundColor: "$primary",
+        //   },
+        // }}
+      >
+        <Button
+          shape={{
+            "@initial": "roundedOpposite1",
+            "@md": "roundedOpposite2",
+          }}
+          label="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          variant="contained"
+          transition="none"
+          fullWidth
+          align="center"
+        />
+      </Container>
+
       <Button
         size="colossal"
-        m={1}
-        shape="roundTop"
+        shape="rounded"
         label="Toon Button"
-        variant="toon"
         // bgColor="info"
+        variant="toon"
         bgColor="black"
-        textColor="white"
+        // textColor="white"
         shadowColor="black"
       />
-      <Button
-        size="large"
-        m={1}
-        shape="roundOpposite1"
-        label="Hello"
-        variant="contained"
-      />
+      <Button m={1} shape={{}} label="Hello" variant="contained" />
       <Button
         size="large"
         m={1}
         shape="roundLeft"
-        label="Hello"
-        variant="outlined"
+        label="Ghost"
+        variant="ghost"
       />
       <Button
         size="large"
@@ -111,14 +131,7 @@ export default function Home() {
           alert("Hello");
         }}
       />
-      <button
-        disabled
-        onClick={() => {
-          alert("Hello");
-        }}
-      >
-        awda
-      </button>
+
       <Button
         size="colossal"
         m={1}
@@ -139,9 +152,9 @@ export default function Home() {
       </WipsieButton>
 
       <Spacing height={2} />
-      <code>
+      {/* <code>
         <pre>{JSON.stringify(Stitches.theme, null, 2)}</pre>
-      </code>
+      </code> */}
     </Page>
   );
 }

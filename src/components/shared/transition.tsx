@@ -1,5 +1,5 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../stitches/stitches";
+import { Stitches } from "../stitches/stitches.config";
 
 // TRANSITIONS
 export type TransitionVariants = VariantProps<typeof defaultTransition>;

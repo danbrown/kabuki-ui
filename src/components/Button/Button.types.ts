@@ -13,9 +13,10 @@ export type DefaultButtonProps = VariantProps<typeof _ButtonStyled>;
 export type ButtonProps = Modify<
   React.HTMLProps<HTMLButtonElement>,
   ComponentCommonProps &
-    AdornmentProps &
     AllowedCssPadding &
     AllowedCssMargin &
+    // AllowedCssMargin &
+    AdornmentProps &
     DefaultButtonProps & {
       /**
        * Button contents

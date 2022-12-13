@@ -2,7 +2,7 @@ import { opacity } from "../utils/opacity";
 import { contrast } from "../utils/contrast";
 import { isThemePalette } from "../utils/isThemePalette";
 import { ButtonProps } from "./Button.types";
-import { Stitches } from "../stitches/stitches";
+import { Stitches } from "../stitches/stitches.config";
 
 export const fixButtonBgColor = (props: ButtonProps) => {
   const { variant, bgColor, disabled } = props;
@@ -13,7 +13,7 @@ export const fixButtonBgColor = (props: ButtonProps) => {
 export const fixButtonBgColorHover = (props: ButtonProps) => {
   const { variant, bgColor, bgColorHover, disabled } = props;
 
-  if (!disabled && !bgColorHover) {
+  if (!disabled && !bgColorHover && typeof bgColor === "string") {
     switch (variant) {
       case "contained":
         if (isThemePalette(bgColor)) {
@@ -45,7 +45,7 @@ export const fixButtonBgColorHover = (props: ButtonProps) => {
 export const fixButtonTextColor = (props: any) => {
   const { variant, bgColor, textColor, disabled }: any = props;
 
-  if (!disabled && textColor === "contrast") {
+  if (!disabled && textColor === "contrast" && typeof bgColor === "string") {
     switch (variant) {
       case "contained":
         return { color: contrast(Stitches.theme.colors[`${bgColor}`].value) };
@@ -63,7 +63,7 @@ export const fixButtonTextColor = (props: any) => {
 export const fixButtonBorderColor = (props: ButtonProps) => {
   const { variant, bgColor, disabled }: any = props;
 
-  if (!disabled && isThemePalette(bgColor)) {
+  if (!disabled && isThemePalette(bgColor) && typeof bgColor === "string") {
     switch (variant) {
       case "ghost":
         return { borderColor: "transparent" };
@@ -81,7 +81,12 @@ export const fixButtonBorderColor = (props: ButtonProps) => {
 export const fixButtonBorderColorHover = (props: ButtonProps) => {
   const { variant, bgColor, bgColorHover, disabled }: any = props;
 
-  if (!disabled && !bgColorHover && isThemePalette(bgColor)) {
+  if (
+    !disabled &&
+    !bgColorHover &&
+    isThemePalette(bgColor) &&
+    typeof bgColor === "string"
+  ) {
     switch (variant) {
       case "contained":
         return { borderColor: Stitches.theme.colors[`${bgColor}Light`].value };

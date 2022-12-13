@@ -1,7 +1,6 @@
 import {
   defaultFont,
   defaultBreakpoints,
-  defaultLayout,
   commonPalette,
   defaultExpressiveness,
 } from "./shared";
@@ -76,8 +75,6 @@ export const lightTheme = {
   },
 
   font: defaultFont,
-
-  layout: defaultLayout,
 
   breakpoints: defaultBreakpoints,
 

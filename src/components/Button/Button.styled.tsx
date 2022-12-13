@@ -1,4 +1,6 @@
 import { getDefaultBgColor, getDefaultBgColorHover } from "../shared/bgColor";
+import { getDefaultFullHeight } from "../shared/fullHeight";
+import { getDefaultFullWidth } from "../shared/fullWidth";
 import { getDefaultNoScroll } from "../shared/noScroll";
 import {
   getDefaultShadowColor,
@@ -8,7 +10,7 @@ import { getDefaultShapes } from "../shared/shape";
 import { getDefaultTextColor } from "../shared/textColor";
 import { getDefaultTextVariants } from "../shared/textVariant";
 import { getDefaultTransition } from "../shared/transition";
-import { Stitches } from "../stitches/stitches";
+import { Stitches } from "../stitches/stitches.config";
 import { opacity } from "../utils/opacity";
 import { getButtonAlign } from "./properties/buttonAlign";
 import { getButtonSizes } from "./properties/buttonSize";
@@ -18,13 +20,18 @@ export const _ButtonStyled = Stitches.styled(
   "button",
 
   // Defaults
+  getDefaultShapes(),
   getDefaultBgColor(),
   getDefaultBgColorHover(),
   getDefaultShadowColor(),
   getDefaultShadowColorHover(),
+
   getDefaultTextColor("contrast"),
-  getDefaultShapes(),
   getDefaultTextVariants("label"),
+
+  getDefaultFullWidth(),
+  getDefaultFullHeight(),
+
   getDefaultTransition(),
   getDefaultNoScroll(),
 
@@ -41,8 +48,6 @@ export const _ButtonStyled = Stitches.styled(
     overflow: "hidden",
     display: "flex",
     alignItems: "center",
-
-    borderRadius: "$$shape",
 
     variants: {
       // Chip

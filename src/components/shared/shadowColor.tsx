@@ -1,6 +1,6 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../stitches/stitches";
-import { themeColorset } from "../stitches/utils/themeColorset";
+import { Stitches } from "../stitches/stitches.config";
+import { themeColorset } from "../utils/themeColorset";
 
 // BG COLOR
 export type ShadowColorProperty = ShadowColorVariants["shadowColor"];

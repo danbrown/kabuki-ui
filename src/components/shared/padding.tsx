@@ -1,33 +1,35 @@
-import { Stitches } from "../stitches/stitches";
+import { PropertyValue } from "@stitches/react";
+import { Stitches } from "../stitches/stitches.config";
+import { BreakpointCombo } from "../stitches/stitches.types";
+import { deepMerge } from "../utils/deepMerge";
+import { propertyBreakpointValue } from "../utils/propertyBreakpointValue";
 
 // PADDINGS
+export type PaddingPropertyType =
+  | string
+  | number
+  | BreakpointCombo<string | number>;
 export type AllowedCssPadding = Partial<{
-  p?: number | string;
-  px?: number | string;
-  py?: number | string;
-  pt?: number | string;
-  pb?: number | string;
-  pl?: number | string;
-  pr?: number | string;
+  p?: PaddingPropertyType;
+  px?: PaddingPropertyType;
+  py?: PaddingPropertyType;
+  pt?: PaddingPropertyType;
+  pb?: PaddingPropertyType;
+  pl?: PaddingPropertyType;
+  pr?: PaddingPropertyType;
 }>;
 
 export const cssPadding = (props: AllowedCssPadding) => {
   const { p, pb, pl, pr, pt, px, py } = props;
 
-  function getPadding(padding: number | string) {
-    return typeof padding === "number"
-      ? `${padding * parseFloat(Stitches.theme.space.unit.value)}px`
-      : padding;
-  }
-
   let result = {};
-  p && (result = { ...result, p: getPadding(p) });
-  px && (result = { ...result, px: getPadding(px) });
-  py && (result = { ...result, py: getPadding(py) });
-  pt && (result = { ...result, pt: getPadding(pt) });
-  pr && (result = { ...result, pr: getPadding(pr) });
-  pb && (result = { ...result, pb: getPadding(pb) });
-  pl && (result = { ...result, pl: getPadding(pl) });
+  p && (result = deepMerge(result, propertyBreakpointValue("p", p)));
+  px && (result = deepMerge(result, propertyBreakpointValue("px", px)));
+  py && (result = deepMerge(result, propertyBreakpointValue("py", py)));
+  pt && (result = deepMerge(result, propertyBreakpointValue("pt", pt)));
+  pr && (result = deepMerge(result, propertyBreakpointValue("pr", pr)));
+  pb && (result = deepMerge(result, propertyBreakpointValue("pb", pb)));
+  pl && (result = deepMerge(result, propertyBreakpointValue("pl", pl)));
 
   return result;
 };

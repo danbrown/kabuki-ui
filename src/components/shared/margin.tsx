@@ -1,33 +1,35 @@
-import { Stitches } from "../stitches/stitches";
+import { PropertyValue, CSSProperties } from "@stitches/react";
+import { Stitches } from "../stitches/stitches.config";
+import { BreakpointCombo } from "../stitches/stitches.types";
+import { deepMerge } from "../utils/deepMerge";
+import { propertyBreakpointValue } from "../utils/propertyBreakpointValue";
 
-// MARGINS
+// MARGIN
+export type MarginPropertyType =
+  | string
+  | number
+  | BreakpointCombo<string | number>;
 export type AllowedCssMargin = Partial<{
-  m?: number | string;
-  mx?: number | string;
-  my?: number | string;
-  mt?: number | string;
-  mb?: number | string;
-  ml?: number | string;
-  mr?: number | string;
+  m?: MarginPropertyType;
+  mx?: MarginPropertyType;
+  my?: MarginPropertyType;
+  mt?: MarginPropertyType;
+  mb?: MarginPropertyType;
+  ml?: MarginPropertyType;
+  mr?: MarginPropertyType;
 }>;
 
 export const cssMargin = (props: AllowedCssMargin) => {
   const { m, mb, ml, mr, mt, mx, my } = props;
 
-  function getMargin(margin: number | string) {
-    return typeof margin === "number"
-      ? `${margin * parseFloat(Stitches.theme.space.unit.value)}px`
-      : margin;
-  }
-
   let result = {};
-  m && (result = { ...result, m: getMargin(m) });
-  mx && (result = { ...result, mx: getMargin(mx) });
-  my && (result = { ...result, my: getMargin(my) });
-  mt && (result = { ...result, mt: getMargin(mt) });
-  mr && (result = { ...result, mr: getMargin(mr) });
-  mb && (result = { ...result, mb: getMargin(mb) });
-  ml && (result = { ...result, ml: getMargin(ml) });
+  m && (result = deepMerge(result, propertyBreakpointValue("m", m)));
+  mx && (result = deepMerge(result, propertyBreakpointValue("mx", mx)));
+  my && (result = deepMerge(result, propertyBreakpointValue("my", my)));
+  mt && (result = deepMerge(result, propertyBreakpointValue("mt", mt)));
+  mr && (result = deepMerge(result, propertyBreakpointValue("mr", mr)));
+  mb && (result = deepMerge(result, propertyBreakpointValue("mb", mb)));
+  ml && (result = deepMerge(result, propertyBreakpointValue("ml", ml)));
 
   return result;
 };

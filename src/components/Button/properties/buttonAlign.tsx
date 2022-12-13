@@ -1,5 +1,5 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../../stitches/stitches";
+import { Stitches } from "../../stitches/stitches.config";
 
 // BUTTON ALIGN
 export type ButtonAlignProperty = ButtonAlignVariants["align"];
