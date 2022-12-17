@@ -1,11 +1,11 @@
-import { Modify } from "../types/modify";
+import { Modify } from "@library/types/modify";
 import { VariantProps } from "@stitches/react";
-import { AllowedCssMargin, cssMargin } from "../shared/margin";
-import { AllowedCssPadding, cssPadding } from "../shared/padding";
+import { AllowedCssMargin, cssMargin } from "@library/shared/margin";
+import { AllowedCssPadding, cssPadding } from "@library/shared/padding";
 import {
   AdornmentProps,
   ComponentCommonProps,
-} from "../stitches/stitches.types";
+} from "@library/stitches/stitches.types";
 import { _ButtonStyled } from "./Button.styled";
 
 export type DefaultButtonProps = VariantProps<typeof _ButtonStyled>;

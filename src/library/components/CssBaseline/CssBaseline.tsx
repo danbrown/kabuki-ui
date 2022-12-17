@@ -1,4 +1,4 @@
-import { Stitches } from "../stitches/stitches.config";
+import { Stitches } from "@library/stitches/stitches.config";
 
 export const CssBaseline = () => {
   return (

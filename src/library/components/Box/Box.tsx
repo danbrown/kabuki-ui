@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
-import { cssMargin } from "../shared/margin";
-import { cssPadding } from "../shared/padding";
-import { _ContainerStyled } from "./Container.styled";
-import { ContainerProps } from "./Container.types";
+import { cssMargin } from "@library/shared/margin";
+import { cssPadding } from "@library/shared/padding";
+import { _BoxStyled } from "./Box.styled";
+import { BoxProps } from "./Box.types";
 
-export const Container = forwardRef(
-  (props: ContainerProps, ref: React.Ref<HTMLDivElement>) => {
+export const Box = forwardRef(
+  (props: BoxProps, ref: React.Ref<HTMLDivElement>) => {
     const {
       // margin
       m,
@@ -26,11 +26,11 @@ export const Container = forwardRef(
       pl,
 
       // bgColor
-      bgColor = "background",
+      bgColor = "transparent",
       bgColorHover = null,
 
       // shape
-      shape = "rounded",
+      shape = "square",
 
       // defaults
       as = "div",
@@ -44,12 +44,12 @@ export const Container = forwardRef(
     } = props;
 
     return (
-      <_ContainerStyled
+      <_BoxStyled
         as={as}
         ref={ref}
         // bgColor
         bgColor={bgColor}
-        bgColorHover={bgColorHover}
+        bgColorHover={bgColorHover || bgColor}
         // shape
         shape={shape}
         // css
@@ -66,7 +66,7 @@ export const Container = forwardRef(
         {...(otherProps as any)}
       >
         {children}
-      </_ContainerStyled>
+      </_BoxStyled>
     );
   }
 );

@@ -1,8 +1,8 @@
 import { VariantProps } from "@stitches/react";
-import { AllowedCssMargin } from "../shared/margin";
-import { AllowedCssPadding } from "../shared/padding";
-import { ComponentCommonProps } from "../stitches/stitches.types";
-import { Modify } from "../types/modify";
+import { AllowedCssMargin } from "@library/shared/margin";
+import { AllowedCssPadding } from "@library/shared/padding";
+import { ComponentCommonProps } from "@library/stitches/stitches.types";
+import { Modify } from "@library/types/modify";
 import { _ContainerStyled } from "./Container.styled";
 
 export type DefaultContainerProps = VariantProps<typeof _ContainerStyled>;

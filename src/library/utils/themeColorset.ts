@@ -1,5 +1,3 @@
-import { htmlColors } from "./htmlColors";
-
 // function to populate a property with all the colors in the theme
 export const themeColorset = (colorset: string, property = null) => ({
   background: {
@@ -149,6 +147,8 @@ export const themeColorset = (colorset: string, property = null) => ({
   basicDark: { [colorset]: "$colors$basicDark", [property]: colorset },
   basicDarker: { [colorset]: "$colors$basicDarker", [property]: colorset },
   basicShadow: { [colorset]: "$colors$basicShadow", [property]: colorset },
+
+  unset: { [colorset]: "unset", [property]: colorset },
 
   // HTML Normal Colors
   red: { [colorset]: "$colors$red", [property]: colorset },

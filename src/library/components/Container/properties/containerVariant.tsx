@@ -1,5 +1,5 @@
 import { VariantProps } from "@stitches/react";
-import { Stitches } from "../../stitches/stitches.config";
+import { Stitches } from "@library/stitches/stitches.config";
 
 // Container Variant
 export type ContainerVariantProperty = ContainerVariantVariants["variant"];

@@ -1,17 +1,19 @@
-import { getDefaultBgColor, getDefaultBgColorHover } from "../shared/bgColor";
-import { getDefaultFullHeight } from "../shared/fullHeight";
-import { getDefaultFullWidth } from "../shared/fullWidth";
-import { getDefaultNoScroll } from "../shared/noScroll";
+import {
+  getDefaultBgColor,
+  getDefaultBgColorHover,
+} from "@library/shared/bgColor";
+import { getDefaultFullHeight } from "@library/shared/fullHeight";
+import { getDefaultFullWidth } from "@library/shared/fullWidth";
+import { getDefaultNoScroll } from "@library/shared/noScroll";
 import {
   getDefaultShadowColor,
   getDefaultShadowColorHover,
-} from "../shared/shadowColor";
-import { getDefaultShapes } from "../shared/shape";
-import { getDefaultTextColor } from "../shared/textColor";
-import { getDefaultTextVariants } from "../shared/textVariant";
-import { getDefaultTransition } from "../shared/transition";
-import { Stitches } from "../stitches/stitches.config";
-import { opacity } from "../utils/opacity";
+} from "@library/shared/shadowColor";
+import { getDefaultShapes } from "@library/shared/shape";
+import { getDefaultTextColor } from "@library/shared/textColor";
+import { getDefaultTextVariants } from "@library/shared/textVariant";
+import { getDefaultTransition } from "@library/shared/transition";
+import { Stitches } from "@library/stitches/stitches.config";
 import { getButtonAlign } from "./properties/buttonAlign";
 import { getButtonSizes } from "./properties/buttonSize";
 import { getButtonVariant } from "./properties/buttonVariant";

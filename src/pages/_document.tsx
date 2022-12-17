@@ -1,6 +1,6 @@
 import React from "react";
 import NextDocument, { Html, Head, Main, NextScript } from "next/document";
-import { CssBaseline } from "../components/CssBaseline/CssBaseline";
+import { CssBaseline } from "@library/components/CssBaseline/CssBaseline";
 
 export default class Document extends NextDocument {
   render() {

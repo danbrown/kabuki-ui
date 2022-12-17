@@ -1,11 +1,7 @@
 import { VariantProps } from "@stitches/react";
 import { forwardRef } from "react";
-import { AllowedCssMargin, cssMargin } from "../shared/margin";
-import { AllowedCssPadding, cssPadding } from "../shared/padding";
-import {
-  AdornmentProps,
-  ComponentCommonProps,
-} from "../stitches/stitches.types";
+import { AllowedCssMargin, cssMargin } from "@library/shared/margin";
+import { AllowedCssPadding, cssPadding } from "@library/shared/padding";
 import { ButtonProps } from "./Button.types";
 import {
   fixButtonBgColor,

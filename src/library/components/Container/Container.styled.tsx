@@ -1,20 +1,23 @@
-import { getDefaultBgColor, getDefaultBgColorHover } from "../shared/bgColor";
-import { getDefaultClickable } from "../shared/clickable";
+import {
+  getDefaultBgColor,
+  getDefaultBgColorHover,
+} from "@library/shared/bgColor";
+import { getDefaultClickable } from "@library/shared/clickable";
 import {
   getDefaultDisplay,
   getDefaultFlexAlign,
   getDefaultFlexDirection,
   getDefaultFlexJustify,
   getDefaultFlexWrap,
-} from "../shared/flex";
-import { getDefaultFullHeight } from "../shared/fullHeight";
-import { getDefaultFullWidth } from "../shared/fullWidth";
-import { getDefaultNoScroll } from "../shared/noScroll";
-import { getDefaultShapes } from "../shared/shape";
-import { getDefaultTextColor } from "../shared/textColor";
-import { getDefaultTextVariants } from "../shared/textVariant";
-import { getDefaultTransition } from "../shared/transition";
-import { Stitches } from "../stitches/stitches.config";
+} from "@library/shared/flex";
+import { getDefaultFullHeight } from "@library/shared/fullHeight";
+import { getDefaultFullWidth } from "@library/shared/fullWidth";
+import { getDefaultNoScroll } from "@library/shared/noScroll";
+import { getDefaultShapes } from "@library/shared/shape";
+import { getDefaultTextColor } from "@library/shared/textColor";
+import { getDefaultTextVariants } from "@library/shared/textVariant";
+import { getDefaultTransition } from "@library/shared/transition";
+import { Stitches } from "@library/stitches/stitches.config";
 
 export const _ContainerStyled = Stitches.styled(
   "div",

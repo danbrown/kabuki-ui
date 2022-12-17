@@ -21,7 +21,7 @@ export type BgColorVariants = VariantProps<typeof defaultBgColor>;
 
 // BG COLOR Hover
 export type BgColorHoverProperty = BgColorHoverVariants["bgColorHover"];
-export const getDefaultBgColorHover = (defaultValue = "primary") =>
+export const getDefaultBgColorHover = (defaultValue = "unset") =>
   Stitches.css({
     variants: {
       bgColorHover: themeColorset("$$bgColorHover"),

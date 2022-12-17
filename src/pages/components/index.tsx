@@ -18,12 +18,12 @@ export default function Home() {
       <Container
         display="flex"
         align="center"
-        bgColor="primary"
-        // bgColorHover="primaryLight"
+        bgColor="black"
+        bgColorHover="primary"
         shape="roundedOpposite1"
-        transition="normal"
-        // textColor="white"
-        clickable
+        transition="slower"
+        textColor="white"
+        // clickable
         m={{
           "@initial": 1,
           "@md": 5,
@@ -46,8 +46,6 @@ export default function Home() {
           fullWidth
           align="center"
         />
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus,
-        vitae.
       </Container>
 
       <Button
@@ -63,9 +61,7 @@ export default function Home() {
       <Button size="large" m={1} label="Ghost" variant="ghost" />
 
       <Flex fullWidth justify="evenly">
-        <Box bgColor="primary" bgColorHover="primaryDark">
-          a
-        </Box>
+        <Box>a</Box>
         <Box>a</Box>
         <Box>a</Box>
       </Flex>

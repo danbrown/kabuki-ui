@@ -1,8 +1,8 @@
-import { opacity } from "../utils/opacity";
-import { contrast } from "../utils/contrast";
-import { isThemePalette } from "../utils/isThemePalette";
+import { opacity } from "@library/utils/opacity";
+import { contrast } from "@library/utils/contrast";
+import { isThemePalette } from "@library/utils/isThemePalette";
 import { ButtonProps } from "./Button.types";
-import { Stitches } from "../stitches/stitches.config";
+import { Stitches } from "@library/stitches/stitches.config";
 
 export const fixButtonBgColor = (props: ButtonProps) => {
   const { variant, bgColor, disabled } = props;

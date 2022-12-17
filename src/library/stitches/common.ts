@@ -1,7 +1,6 @@
 import { lightTheme } from "../theme/light";
 import { htmlColors } from "../utils/htmlColors";
 import { passProp } from "../utils/passProp";
-import { PropertyValue } from "@stitches/react";
 
 // TOKENS
 export const commonTokens = {
