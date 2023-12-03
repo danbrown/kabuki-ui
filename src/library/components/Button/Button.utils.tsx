@@ -1,5 +1,5 @@
 import { opacity } from "@library/utils/opacity";
-import { contrast } from "@library/utils/contrast";
+import { contrastScss } from "@library/utils/contrast";
 import { isThemePalette } from "@library/utils/isThemePalette";
 import { ButtonProps } from "./Button.types";
 import { Stitches } from "@library/stitches/stitches.config";
@@ -48,7 +48,9 @@ export const fixButtonTextColor = (props: any) => {
   if (!disabled && textColor === "contrast" && typeof bgColor === "string") {
     switch (variant) {
       case "contained":
-        return { color: contrast(Stitches.theme.colors[`${bgColor}`].value) };
+        return {
+          color: contrastScss(Stitches.theme.colors[`${bgColor}`].value),
+        };
       case "outlined":
       case "ghost":
       case "toon":

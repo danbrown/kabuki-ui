@@ -1,6 +1,6 @@
 import { isHexColor } from "./isHexColor";
 
-export function contrast(hex: string) {
+export function contrastScss(hex: string) {
   if (!isHexColor(hex)) return null;
 
   let threshold = 149;

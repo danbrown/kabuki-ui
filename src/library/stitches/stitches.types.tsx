@@ -1,6 +1,6 @@
-import { CSS } from "@stitches/react";
-import { Stitches } from "./stitches.config";
-import { commonTheme } from "./common";
+import type { Stitches } from "./stitches.config";
+import type { commonTheme } from "./common";
+import type { CSS } from "@stitches/react";
 
 // stitches types
 export type StitchesConfig = typeof Stitches.config;
